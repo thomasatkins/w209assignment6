@@ -1,0 +1,82 @@
+<html>
+<head>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+<style type="text/css">
+	#mapid { height: 180px; }
+</style>
+
+</head>
+
+<body>
+<h1>A map of New York Showing the End points of Rides in Feb 2016 by age</h1>
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+<script src="/201602-bike-data3.js"></script>
+
+<div id="mapid" style="width: 600px; height: 400px"></div>
+
+<script type="text/javascript">
+
+	
+
+	var mymap = L.map('mapid').setView([40.72, -74], 12);
+
+	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpandmbXliNDBjZWd2M2x6bDk3c2ZtOTkifQ._QA7i5Mpkd_m30IGElHziw', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			id: 'mapbox.light'
+		}).addTo(mymap);
+
+
+	var geojsonMarkerOptions = {
+	    radius: 8,
+	    fillColor: "#ff7800",
+	    color: "#000",
+	    weight: 1,
+	    opacity: 1,
+	    fillOpacity: 0.8
+	};
+
+	L.geoJson(bike_data, {
+	    pointToLayer: function (feature, latlng) {
+	    	gj_mo = geojsonMarkerOptions;
+	    	if (feature.properties.name < 1920){
+	    		gj_mo.fillColor = "#333333";
+	    	} else if (feature.properties.name < 1930){
+	    		gj_mo.fillColor = "#444444";
+	    	} else if (feature.properties.name < 1940){
+	    		gj_mo.fillColor = "#555555";
+	    	} else if (feature.properties.name < 1950){
+	    		gj_mo.fillColor = "#666666";
+	    	} else if (feature.properties.name < 1960){
+	    		gj_mo.fillColor = "#777777";
+	    	} else if (feature.properties.name < 1970){
+	    		gj_mo.fillColor = "#888888";
+	    	} else if (feature.properties.name < 1980){
+	    		gj_mo.fillColor = "#999999";
+	    	} else if (feature.properties.name < 1990){
+	    		gj_mo.fillColor = "#aaaaaa";
+	    	} else if (feature.properties.name < 2000){
+	    		gj_mo.fillColor = "#bbbbbb";
+	    	} else if (feature.properties.name < 2010){
+	    		gj_mo.fillColor = "#cccccc";
+	    	} else if (feature.properties.name < 2020){
+	    		gj_mo.fillColor = "#dddddd";
+	    	}
+	        return L.circleMarker(latlng, gj_mo);
+	    },
+
+
+	}).addTo(mymap);
+
+
+
+</script>
+
+</body>
+
+
+</html>
+
+
